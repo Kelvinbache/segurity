@@ -6,6 +6,7 @@ Create a more secure security system than the current ones, to prevent theft, sc
 This diagram illustrates the data flow and system components.
 owchart TD
 ```mermaid
+graph TD;
 A[Usuario] --> B{Aplicación Móvil/Web};
 B --> C{API Gateway};
 C --> D{Servicios de Autenticación};
@@ -14,3 +15,4 @@ E --> F{Motor de Riesgo y IA};
 F --> G[Base de Datos];
 E --> G;
 D --> G;
+```
