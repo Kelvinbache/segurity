@@ -18,7 +18,7 @@ D --> G;
 ```
 
 # Folder structures
-```mermaid
+```
 proyecto_deteccion_fraude/
 │
 ├── docs/ # Documentación del proyecto
