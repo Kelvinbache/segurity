@@ -5,7 +5,7 @@ Create a more secure security system than the current ones, to prevent theft, sc
 # Technical Flowchart
 This diagram illustrates the data flow and system components.
 owchart TD
----
+```mermaid
 A[Usuario] --> B{Aplicación Móvil/Web};
 B --> C{API Gateway};
 C --> D{Servicios de Autenticación};
