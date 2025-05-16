@@ -1,6 +1,10 @@
-# The controller of get 
-# we pass a set of elements
+from config.mySql import db
 
 def methodGet(): 
-    return {"user":"kelvin"}
+    cursors = db.cursor()
+    cursors.execute("select * from usuario")
+    mySql = cursors.fetchall()
+    return {"user":mySql}
+        
+    
 
