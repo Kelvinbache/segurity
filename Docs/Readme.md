@@ -2,6 +2,30 @@
 
 Create a more secure security system than the current ones, to prevent theft, scams or any crime that may occur on the web.
 
+
+
+
+## 📋 Tabla de Contenidos
+1. [Descripción del Proyecto](#-descripción-del-proyecto)
+2. [Tecnologías Utilizadas](#-tecnologías-utilizadas)
+3. [Cronograma de Implementación](#-cronograma-de-implementación)
+4. [Estructura del Proyecto](#-estructura-del-proyecto)
+5. [Instalación y Configuración](#-instalación-y-configuración)
+6. [Documentación API](#-documentación-api)
+7. [Equipo](#-equipo)
+8. [Licencia](#-licencia)
+
+## 🚀 Descripción del Proyecto
+Sistema inteligente para detección de transacciones fraudulentas en tiempo real mediante:
+- API REST con FastAPI
+- Modelos de Machine Learning (LightGBM)
+- Autenticación MFA
+- Encriptación AES-256
+
+**Objetivo Principal:**  
+Reducir en un 40% los casos de fraude en el primer año de implementación.
+
+
 # Technical Flowchart
 This diagram illustrates the data flow and system components.
 owchart TD
@@ -62,6 +86,32 @@ proyecto_deteccion_fraude/
 ├── .gitignore # Archivo para ignorar archivos en Git
 ├── requirements.txt # Lista de dependencias de Python
 └── Dockerle # Conguración de Docker (si se usa)
+```
+
+
+## 💻 Tecnologías Utilizadas
+| Categoría       | Tecnologías                                                                 |
+|-----------------|----------------------------------------------------------------------------|
+| Backend         | FastAPI, Python 3.10, Uvicorn                                              |
+| Machine Learning| LightGBM, Scikit-learn, Pandas, NumPy                                      |
+| Infraestructura | AWS EC2, Docker, Kubernetes (EKS)                                          |
+| Seguridad       | JWT, AES-256, OWASP ZAP                                                    |
+| Monitoreo       | Prometheus, Grafana                                                        |
+
+## 📅 Cronograma de Implementación
+
+```mermaid
+gantt
+    title Cronograma Mayo 2025 - Enero 2026
+    dateFormat  YYYM-MM-DD
+    section Preparación
+    Análisis Legal          :2025-05-01, 30d
+    Infraestructura         :2025-05-16, 45d
+    section Desarrollo
+    API Core                :2025-07-01, 75d
+    Modelo ML               :2025-07-15, 60d
+    section Pruebas
+    Validación              :2025-10-15, 30d
 ```
 
 # Progress on tasks
