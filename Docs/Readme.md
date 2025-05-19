@@ -69,7 +69,7 @@ proyecto_deteccion_fraude/
 Replica de un banco digital 
 - [x] Conexion a la base de datos
 - [x] Crear ruta para el usuario
-- [ ] Crear metodo para ingresar al banco (validar clave y usuario)
+- [x] Crear metodo para ingresar al banco (validar clave y usuario)
 - [ ] Crear ruta para transacciones 
 - [ ] Crear metodos para envio de dinero 
 - [ ] Ajustar las repuestas de cada metodo con el http correspondiente

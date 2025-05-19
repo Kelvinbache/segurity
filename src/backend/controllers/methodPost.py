@@ -8,21 +8,26 @@ cursors = db.cursor()
 
 def methodPost(user:User):
       
-        sql = ("select nombre, password from usuario")
+        sql = ("select nombre, password from usuario where nombre = %s and password = %s")
       
         insertData = (user.name,user.password)
       
         cursors.execute(sql,insertData)
 
-        mys = cursors.fetchall()
-         
-         result = filter(user.name == nombre and user.password == password, mys)
-      
-         if not result:
-              raise HTTPException(
-                 status_code=404
-                 detail="user not finding"
-              )
+        mys = cursors.fetchone()
 
-        return {"message":"welcome to banco", "user":user.name}
+        # asking if the user exists
 
+        if not mys:
+
+             raise HTTPException(status_code = 404, detail = "user not finding")
+
+        else:
+
+          return {"message":"welcome to banco", "user":user.name}
+
+# Transaction of money
+
+
+
+# luego hacer que me muestre el saldo que tengo en la cuenta  
