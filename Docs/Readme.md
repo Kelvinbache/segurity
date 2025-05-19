@@ -7,13 +7,13 @@ Create a more secure security system than the current ones, to prevent theft, sc
 
 ## 📋 Tabla de Contenidos
 1. [Descripción del Proyecto](#-descripción-del-proyecto)
-2. [Tecnologías Utilizadas](#-tecnologías-utilizadas)
-3. [Cronograma de Implementación](#-cronograma-de-implementación)
-4. [Estructura del Proyecto](#-estructura-del-proyecto)
-5. [Instalación y Configuración](#-instalación-y-configuración)
-6. [Documentación API](#-documentación-api)
-7. [Equipo](#-equipo)
-8. [Licencia](#-licencia)
+2. [Tecnologías Utilizadas](#-Tecnologías-Utilizadas)
+3. [Diagrama Tecnico](#technical-flowchart)
+4. [Cronograma de Implementación](#-cronograma-de-implementación)
+5. [Estructura del Proyecto](#-Folder-structures)
+6. [Instalación y Configuración](#en-proceso)
+7. [Documentación API](#en-proceso)
+
 
 ## 🚀 Descripción del Proyecto
 Sistema inteligente para detección de transacciones fraudulentas en tiempo real mediante:
@@ -26,7 +26,17 @@ Sistema inteligente para detección de transacciones fraudulentas en tiempo real
 Reducir en un 40% los casos de fraude en el primer año de implementación.
 
 
-# Technical Flowchart
+## 💻 Tecnologías Utilizadas
+| Categoría       | Tecnologías                                                                 |
+|-----------------|----------------------------------------------------------------------------|
+| Backend         | FastAPI, Python 3.10, Uvicorn                                              |
+| Machine Learning| LightGBM, Scikit-learn, Pandas, NumPy                                      |
+| Infraestructura | AWS EC2, Docker, Kubernetes (EKS)                                          |
+| Seguridad       | JWT, AES-256, OWASP ZAP                                                    |
+| Monitoreo       | Prometheus, Grafana                                                        |
+
+
+## Technical Flowchart
 This diagram illustrates the data flow and system components.
 owchart TD
 ```mermaid
@@ -41,7 +51,27 @@ E --> G;
 D --> G;
 ```
 
-# Folder structures
+
+
+## 📅 Cronograma de Implementación
+
+```mermaid
+gantt
+    title Cronograma Mayo 2025 - Enero 2026
+    dateFormat  YYYM-MM-DD
+    section Preparación
+    Análisis Legal          :2025-05-01, 30d
+    Infraestructura         :2025-05-16, 45d
+    section Desarrollo
+    API Core                :2025-07-01, 75d
+    Modelo ML               :2025-07-15, 60d
+    section Pruebas
+    Validación              :2025-10-15, 30d
+```
+
+
+
+## Folder structures
 ```
 proyecto_deteccion_fraude/
 │
@@ -88,31 +118,7 @@ proyecto_deteccion_fraude/
 └── Dockerle # Conguración de Docker (si se usa)
 ```
 
-
-## 💻 Tecnologías Utilizadas
-| Categoría       | Tecnologías                                                                 |
-|-----------------|----------------------------------------------------------------------------|
-| Backend         | FastAPI, Python 3.10, Uvicorn                                              |
-| Machine Learning| LightGBM, Scikit-learn, Pandas, NumPy                                      |
-| Infraestructura | AWS EC2, Docker, Kubernetes (EKS)                                          |
-| Seguridad       | JWT, AES-256, OWASP ZAP                                                    |
-| Monitoreo       | Prometheus, Grafana                                                        |
-
-## 📅 Cronograma de Implementación
-
-```mermaid
-gantt
-    title Cronograma Mayo 2025 - Enero 2026
-    dateFormat  YYYM-MM-DD
-    section Preparación
-    Análisis Legal          :2025-05-01, 30d
-    Infraestructura         :2025-05-16, 45d
-    section Desarrollo
-    API Core                :2025-07-01, 75d
-    Modelo ML               :2025-07-15, 60d
-    section Pruebas
-    Validación              :2025-10-15, 30d
-```
+# En Proceso
 
 # Progress on tasks
  
