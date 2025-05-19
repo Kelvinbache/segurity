@@ -63,3 +63,24 @@ proyecto_deteccion_fraude/
 ├── requirements.txt # Lista de dependencias de Python
 └── Dockerle # Conguración de Docker (si se usa)
 ```
+
+# Progress on tasks
+ 
+Replica de un banco digital 
+- [x] Conexion a la base de datos
+- [x] Crear ruta para el usuario
+- [ ] Crear metodo para ingresar al banco (validar clave y usuario)
+- [ ] Crear ruta para transacciones 
+- [ ] Crear metodos para envio de dinero 
+- [ ] Ajustar las repuestas de cada metodo con el http correspondiente
+- [ ] Manejar error globales de la api 
+- [ ] Agregar la autenficacion con Jws 
+
+
+# Tasks for later
+
+Tareas que se haran luego
+- [ ] Como recolectar informacion de un disposito 
+- [ ] como implementar o insertar un Script 
+- [ ] Agregar la IA a la api para hacer las validaciones de transaccion 
+- [ ] Entrenamiento de la IA para actualizacion de posibles ataques

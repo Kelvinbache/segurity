@@ -1,10 +1,22 @@
 from config.mySql import db
 
+cursors = db.cursor(dictionary=True)
+
+
 def methodGet(): 
-    cursors = db.cursor()
+   
     cursors.execute("select * from usuario")
+   
     mySql = cursors.fetchall()
+   
     return {"user":mySql}
         
     
+def methodGetId(item_id:int):    
 
+    cursors.execute("select * from usuario where id = %s",(item_id,))
+    
+    mySql = cursors.fetchall()
+    
+    return {"item_id":item_id,"user":mySql}
+    
