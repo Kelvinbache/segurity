@@ -1,8 +1,13 @@
 from config.mySql import db
+from fastapi import HTTPException
+
 
 cursors = db.cursor(dictionary=True)
 
 
+# move on to the other method
+
+# show account
 def methodGet(): 
    
     cursors.execute("select * from usuario")
@@ -11,16 +16,23 @@ def methodGet():
 
    
     return {"user":mySql}
-        
-    
+
+# Filter to a friend 
 def methodGetId(item_id:int):    
 
-    cursors.execute("select * from usuario where id = %s",(item_id,))
+    cursors.execute("select * from cuenta where id_cuenta = %s",(item_id,))
     
-    mySql = cursors.fetchall()
+    mys = cursors.fetchone()
 
-    print(mySql)
+    if not mys:
+          raise HTTPException(status_code = 404, detail = "account not found")
 
     
-    return {"item_id":item_id,"user":mySql}
+    return {"item_id":item_id,"user":mys}
     
+
+# lista de cosas que tengo que hacer aqui: 
+#  Crear el method get para ver a las personas que tengo agregadas (not is import)
+#  Crear el method post para agregar alguien y enviar el dinero (import)
+#  Crear el method delete para eliminar una persona que no me agrada (not is import)
+#  verificar si en verdad existe esa persona (import) 
