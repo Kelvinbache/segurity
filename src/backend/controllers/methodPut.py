@@ -13,3 +13,9 @@ def methodPut(item_id:int,user:User):
     db.commit()
  
     return {"item_id":item_id, "message":"updata with exit", "body":person}
+
+
+# Idea para este apartado:
+# Actualizar la contrasena (enviar un codigo al movil, o autentificador de google)
+# Actualizar los datos de un contacto  
+# Actualizar los datos personales

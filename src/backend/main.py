@@ -1,13 +1,20 @@
 # import the server
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 import uvicorn
 
 # import the router
 from routers.router import router as router_user
 from routers.transacciones import router as router_transaction
 
+#Driver error global
+from middleware.error import driver
+
+
+
 app = FastAPI()
 
+# add middleware 
+app.middleware("http")(driver)
 
 # include all the routers
 app.include_router(router_user)

@@ -4,10 +4,7 @@ from fastapi import HTTPException
 
 cursors = db.cursor(dictionary=True)
 
-
-# move on to the other method
-
-# show account
+# show list of friends
 def methodGet(): 
    
     cursors.execute("select * from usuario")
@@ -17,7 +14,7 @@ def methodGet():
    
     return {"user":mySql}
 
-# Filter to a friend 
+# Filter to account
 def methodGetId(item_id:int):    
 
     cursors.execute("select * from cuenta where id_cuenta = %s",(item_id,))

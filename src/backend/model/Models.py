@@ -25,4 +25,4 @@ class Device(BaseModel):
 
 # Pasos de hoy:
 # 1) validar el saldo para hacer la transferencia
-#
+# 2) Validar los datos de entrada
