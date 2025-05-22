@@ -123,15 +123,15 @@ proyecto_deteccion_fraude/
 
 | Módulo           | Tareas Clave                                                                 | Prioridad | Estado  | Tecnologías Involucradas             |
 |------------------|-----------------------------------------------------------------------------|-----------|---------|--------------------------------------|
-| **Core**         | Diseñar diagrama ER (usuarios, cuentas, transacciones)                     | 🔴 Alta   | [ ]      | SQLAlchemy, PostgreSQL              |
+| **Core**         | Diseñar diagrama ER (usuarios, cuentas, transacciones)                     | 🔴 Alta   | [X]      | pydantic, MySql              |
 |                  | Configurar FastAPI (middlewares, excepciones globales)                      | 🔴 Alta   | [ ]      | FastAPI, Uvicorn                    |
 | **Autenticación**| Implementar JWT (registro/login)                                            | 🔴 Alta   | [ ]      | PyJWT, bcrypt                       |
 |                  | Roles y permisos (cliente/admin/cajero)                                     | 🟡 Media  | [ ]      | OAuth2 Scopes                       |
-| **Usuarios**     | CRUD de clientes + verificación de identidad                                | 🔴 Alta   | [ ]      | FastAPI, Pydantic                   |
-| **Cuentas**      | Modelos: Ahorro/Corriente/Nómina (saldo, IBAN, fecha apertura)              | 🔴 Alta   | [ ]      | SQLAlchemy ORM                      |
+| **Usuarios**     | CRUD de clientes + verificación de identidad                                | 🔴 Alta   | [X]      | FastAPI, Pydantic                   |
+| **Cuentas**      | Modelos: Ahorro/Corriente/Nómina (saldo, IBAN, fecha apertura)              | 🔴 Alta   | [ ]      | pydantic ORM                      |
 | **Transacciones**| Transferencias internas/externas (validar saldo)                            | 🔴 Alta   | [ ]     | Transacciones ACID                  |
 |                  | Historial con filtros (fecha, monto, tipo)                                  | 🟡 Media  | [ ]     | FastAPI Pagination                  |
-| **Seguridad**    | Encriptar datos sensibles (ej: saldos)                                      | 🟡 Media  | [ ]      | SQLAlchemy-Encrypted                |
+| **Seguridad**    | Encriptar datos sensibles (ej: saldos)                                      | 🟡 Media  | [ ]      | mySql-Encrypted                |
 |                  | Rate limiting (evitar ataques DDoS)                                         | 🟢 Baja   | [ ]     | slowapi                            |
 | **Documentación**| Swagger UI (descripción endpoints)                                          | 🟢 Baja   | [ ]     | FastAPI Auto-Docs                  |
 |                  | Colección Postman (ejemplos reales)                                         | 🟢 Baja   | [ ]     | OpenAPI 3.0                        |
