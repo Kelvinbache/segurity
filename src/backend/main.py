@@ -26,3 +26,5 @@ if __name__ == "__main__":
 # 4) Comprobar sip el usuario puede hacer una transferencia con su saldo actual
 # 5) Hacer como Binace para que te llegue un mesaje al correo sonbre la transferencia o mensajes normales
 # 6) investigar como puedo hacer para bloquear una transaccion o la cuenta misma para evitar el robo
+# 7) Crer y dejar la creacion de la base de datos y sus tablas
+

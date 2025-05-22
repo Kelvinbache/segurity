@@ -119,24 +119,19 @@ proyecto_deteccion_fraude/
 ```
 
 # En Proceso
+## 🏦 Tabla de Desarrollo: API Bancaria
 
-# Progress on tasks
- 
-Replica de un banco digital 
-- [x] Conexion a la base de datos
-- [x] Crear ruta para el usuario
-- [x] Crear metodo para ingresar al banco (validar clave y usuario)
-- [ ] Crear ruta para transacciones 
-- [ ] Crear metodos para envio de dinero 
-- [ ] Ajustar las repuestas de cada metodo con el http correspondiente
-- [ ] Manejar error globales de la api 
-- [ ] Agregar la autenficacion con Jws 
-
-
-# Tasks for later
-
-Tareas que se haran luego
-- [ ] Como recolectar informacion de un disposito 
-- [ ] como implementar o insertar un Script 
-- [ ] Agregar la IA a la api para hacer las validaciones de transaccion 
-- [ ] Entrenamiento de la IA para actualizacion de posibles ataques
+| Módulo           | Tareas Clave                                                                 | Prioridad | Estado  | Tecnologías Involucradas             |
+|------------------|-----------------------------------------------------------------------------|-----------|---------|--------------------------------------|
+| **Core**         | Diseñar diagrama ER (usuarios, cuentas, transacciones)                     | 🔴 Alta   | [ ]      | SQLAlchemy, PostgreSQL              |
+|                  | Configurar FastAPI (middlewares, excepciones globales)                      | 🔴 Alta   | [ ]      | FastAPI, Uvicorn                    |
+| **Autenticación**| Implementar JWT (registro/login)                                            | 🔴 Alta   | [ ]      | PyJWT, bcrypt                       |
+|                  | Roles y permisos (cliente/admin/cajero)                                     | 🟡 Media  | [ ]      | OAuth2 Scopes                       |
+| **Usuarios**     | CRUD de clientes + verificación de identidad                                | 🔴 Alta   | [ ]      | FastAPI, Pydantic                   |
+| **Cuentas**      | Modelos: Ahorro/Corriente/Nómina (saldo, IBAN, fecha apertura)              | 🔴 Alta   | [ ]      | SQLAlchemy ORM                      |
+| **Transacciones**| Transferencias internas/externas (validar saldo)                            | 🔴 Alta   | [ ]     | Transacciones ACID                  |
+|                  | Historial con filtros (fecha, monto, tipo)                                  | 🟡 Media  | [ ]     | FastAPI Pagination                  |
+| **Seguridad**    | Encriptar datos sensibles (ej: saldos)                                      | 🟡 Media  | [ ]      | SQLAlchemy-Encrypted                |
+|                  | Rate limiting (evitar ataques DDoS)                                         | 🟢 Baja   | [ ]     | slowapi                            |
+| **Documentación**| Swagger UI (descripción endpoints)                                          | 🟢 Baja   | [ ]     | FastAPI Auto-Docs                  |
+|                  | Colección Postman (ejemplos reales)                                         | 🟢 Baja   | [ ]     | OpenAPI 3.0                        |
