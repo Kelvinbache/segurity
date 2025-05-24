@@ -1,8 +1,8 @@
 from model.Models import User
 from config.mySql import db
              
-              # Here parameters 
-def methodPut(item_id:int,user:User): 
+# Here parameters 
+def methodPatch(item_id:int,user:User): 
  
     sql = ("update usuario set nombre = %s, apellido = %s, email = %s, telefono = %s where id = %s")
  

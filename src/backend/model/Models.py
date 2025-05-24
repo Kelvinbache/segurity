@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
+# from fastapi.responses import JSONResponse
+
 
 # modification of model
 class User(BaseModel):
@@ -20,6 +22,8 @@ class Device(BaseModel):
     brand:str
     model:str 
     id_user:int
+
+
 
 
 

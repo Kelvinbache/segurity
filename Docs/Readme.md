@@ -123,12 +123,12 @@ proyecto_deteccion_fraude/
 
 | Módulo           | Tareas Clave                                                                 | Prioridad | Estado  | Tecnologías Involucradas             |
 |------------------|-----------------------------------------------------------------------------|-----------|---------|--------------------------------------|
-| **Core**         | Diseñar diagrama ER (usuarios, cuentas, transacciones)                     | 🔴 Alta   | [X]      | pydantic, MySql              |
-|                  | Configurar FastAPI (middlewares, excepciones globales)                      | 🔴 Alta   | [ ]      | FastAPI, Uvicorn                    |
+| **Core**         | Diseñar diagrama ER (usuarios, cuentas, transacciones)                     | 🔴 Alta    | [X]      | pydantic, MySql              |
+|                  | Configurar FastAPI (middlewares, excepciones globales)                      | 🔴 Alta   | [X]      | FastAPI, Uvicorn                    |
 | **Autenticación**| Implementar JWT (registro/login)                                            | 🔴 Alta   | [ ]      | PyJWT, bcrypt                       |
 |                  | Roles y permisos (cliente/admin/cajero)                                     | 🟡 Media  | [ ]      | OAuth2 Scopes                       |
 | **Usuarios**     | CRUD de clientes + verificación de identidad                                | 🔴 Alta   | [X]      | FastAPI, Pydantic                   |
-| **Cuentas**      | Modelos: Ahorro/Corriente/Nómina (saldo, IBAN, fecha apertura)              | 🔴 Alta   | [ ]      | pydantic ORM                      |
+| **Cuentas**      | Modelos: Ahorro/Corriente/Nómina (saldo, IBAN, fecha apertura)              | 🔴 Alta   | [X]      | pydantic ORM                      |
 | **Transacciones**| Transferencias internas/externas (validar saldo)                            | 🔴 Alta   | [ ]     | Transacciones ACID                  |
 |                  | Historial con filtros (fecha, monto, tipo)                                  | 🟡 Media  | [ ]     | FastAPI Pagination                  |
 | **Seguridad**    | Encriptar datos sensibles (ej: saldos)                                      | 🟡 Media  | [ ]      | mySql-Encrypted                |

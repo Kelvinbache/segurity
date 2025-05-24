@@ -1,5 +1,6 @@
 # import the server
 from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 import uvicorn
 
 # import the router
@@ -7,14 +8,17 @@ from routers.router import router as router_user
 from routers.transacciones import router as router_transaction
 
 #Driver error global
-from middleware.error import driver
-
+from middleware.error import driver,validation_exceptions_handler
 
 
 app = FastAPI()
 
 # add middleware 
 app.middleware("http")(driver)
+
+# add errs specific
+app.add_exception_handler(RequestValidationError,validation_exceptions_handler)
+
 
 # include all the routers
 app.include_router(router_user)
@@ -24,6 +28,11 @@ app.include_router(router_transaction)
 # The port for def
 if __name__ == "__main__":
     uvicorn.run("main:app", port=8000, reload=True)
+
+# pasos para manana en la noche:
+# investigar la implementacion de un token
+# investigar como hacer refrescacion de un token
+# darle permiso a un usuario desde el momento que ingresa a la pagina 
 
 
 # lista de la cosas que me esta faltando:

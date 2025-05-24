@@ -1,31 +1,38 @@
+# Model
 from model.Models import User,Transaction
+
+# db
 from config.mySql import db
+
+# Error
 from fastapi import HTTPException
+
+# Redirection
 from fastapi.responses import RedirectResponse
+
 
 cursors = db.cursor() 
 
 # validate if the user exists
 
-def methodPost(user:User):
-      
-        sql = ("select id, nombre, password from usuario where nombre = %s and password = %s")
+def methodPost(user:User):    
+     #Filter the data   
+        sql = ("select id, nombre, password from usuario where nombre = %s and password = %s") # select and have condition
       
         insertData = (user.name,user.password)
       
      # Driver error  
         cursors.execute(sql,insertData)
 
-        mys = cursors.fetchone()
+        mys = cursors.fetchone() # -----> None
         
-        # asking if the user exists
         if not mys:
-             raise HTTPException(status_code = 404, detail = "user not finding")
+            raise HTTPException(status_code=401, detail="invalid user or invalid key")
 
         else:
           
           #redirect to my account
-          return RedirectResponse(url=f"/banco/saldo/{mys[0]}", status_code=301) 
+           return RedirectResponse(url=f"/banco/saldo/{mys[0]}", status_code=301) 
 
 
 
