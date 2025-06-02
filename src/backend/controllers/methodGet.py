@@ -1,8 +1,17 @@
 from config.mySql import db
-from fastapi import HTTPException
 
+from fastapi import Cookie
+
+from fastapi.responses import JSONResponse
+
+from typing import Annotated
+
+# from model.Models import Token, User
+
+from services.authentication import verificationToken
 
 cursors = db.cursor(dictionary=True)
+
 
 # show list of friends
 def methodGet(): 
@@ -15,18 +24,37 @@ def methodGet():
     return {"user":mySql}
 
 # Filter to account
-def methodGetId(item_id:int):    
+# capture the token we are passing
+# validarlo sip es correcto
 
+                             #! Para recibir una cookie los parametros deben ser iguales a nombre de la cookie
+def methodGetId(item_id:int, session_token:Annotated[str | None, Cookie()]= None):    
+   
     cursors.execute("select * from cuenta where id_cuenta = %s",(item_id,))
-    
     mys = cursors.fetchone()
-
+    
+    
+    #return is None  
     if not mys:
-          raise HTTPException(status_code = 404, detail = "account not found")
+          responder = JSONResponse(status_code=404,content="account not found") 
+          responder.set_cookie(key="login_error", value="data invalid", httponly=True, expires=3600, samesite="lax")
+          return responder
+    
+    # not is cookie 
+    if session_token is None: 
+        responder = JSONResponse(status_code=404, content={"message":"cookie not found"})      
+        responder.set_cookie(key="token_invalid", value="failed token", httponly=True, expires=3600, samesite="lax")
+        return responder
+ 
+    try:
+       mT = Token(**{"token":session_token})
+       verificationToken(mT) #!---------> error 
 
-    
-    return {"item_id":item_id,"user":mys}
-    
+    except:
+         print("error send the token") 
+     
+    responder = JSONResponse(content={"item_id":item_id,"user":mys})      
+    return responder
 
 # lista de cosas que tengo que hacer aqui: 
 #  Crear el method get para ver a las personas que tengo agregadas (not is import)

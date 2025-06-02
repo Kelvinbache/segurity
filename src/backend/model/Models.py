@@ -24,8 +24,14 @@ class Device(BaseModel):
     id_user:int
 
 
+# Create a model Token
+class Token(BaseModel):
+    token:str
 
-
+class Payload(BaseModel):
+    sub:int 
+    userName:str
+        
 
 # Pasos de hoy:
 # 1) validar el saldo para hacer la transferencia

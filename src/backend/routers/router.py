@@ -1,14 +1,20 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 
 # controllers 
 from controllers.methodGet import methodGet,methodGetId
+
 from controllers.methodPost import methodPost
+
 from controllers.methodPatch import methodPatch
+
 from controllers.methodDelete import methodDelete
+
+# Model 
+# from model.Models import (User)
+
 
 # Use multiple routers
 router = APIRouter()
-
 
 # show balance
 router.get("/banco")(methodGet)
