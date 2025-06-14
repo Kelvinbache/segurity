@@ -1,48 +1,55 @@
 # libre
 from authlib.jose import jwt
 
-# import time
-from model.Models import Payload
+from fastapi import (Cookie, HTTPException, Depends)
+
+from typing import Annotated
+
+from datetime import (datetime,timezone,timedelta)
+
+from model.Models import Token
 
 
+key="The monkey flow"
+
+header= {'alg':'HS256'}     
+
+
+
+# from fastapi.security import OAuth2PasswordBearer 
+
+
+#Header 
 # Pass middleware ---> time is make fast ? 
 # Pass function for all methods http ---> time is make slow
 
 
+def authentication(user:dict): 
 
-def authentication(user):
-   
-    header= {'alg':'HS256'} #Header 
+    to_encode = user.copy()
+
+    exp = datetime.now(timezone.utc) + timedelta(minutes=15)
+    to_encode.update({"exp":exp})
     
-    # id and name 
-    # payload={'id':user[0], 'user':user[1]} #Body
+    # password   
+    token = jwt.encode(header, to_encode, key) #converted into a token
+    Token(session_token=token, token_type="bearer")   
+
+    return  token
+
+
+
+def verificationToken(session_token:Annotated[str | None, Cookie()]= None): 
+    s= key.encode('utf-8')
+
+    if session_token is None: 
+         raise HTTPException(status_code=404, detail="cookie not found")
     
-    createToken=Payload(**{"sub":user[0], "userName":user[1]})
-    claim = payload.get
-
-    # password
-    key_private=user[2] #password
-    
-    token = jwt.encode(header,createToken, key_private) #converted into a token
-    return token
-
-
-# function for verification
-# luego pasar el token que recibimos mediante el post
-def verificationToken(token):
-       
-    try:  
-         #compares the password with the token (boolean)
-        claims = jwt.decode(tokens.token)  #!---------> return error      
-         
-        if not claims:
-           print("token invalid")
-        else:
-           print(claims)    
-   
+    try: 
+         claim = jwt.decode(session_token, s) #!----> Here this error 
+         return True  
     except:
-           print("Then error for through")    
-      
+         raise HTTPException(status_code=401, detail="Token invalid")
 
 # List for complete
 # --------------------------------------------------------------------------------------------
@@ -51,7 +58,9 @@ def verificationToken(token):
 # 3) Ask the user to enter their password before making the transfer.
 # 4) Refresh the token every 10 minutes
 # 5) Delete cookies every 10 minutes
-# 6) Add depends the controllers 
+# 6) new model of tokens
+# 7) create the .env for send keys_secret
+# 8) get model session token
 # ---------------------------------------------------------------------------------------------
 
 
@@ -69,3 +78,4 @@ def verificationToken(token):
 
 # Agregar dependencias a las rutas para manejar los datos que van llegando
 
+# Configurar un poquito la base de datos y los modelos, para colocarle los tokens

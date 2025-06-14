@@ -6,7 +6,7 @@ import uvicorn
 
 # import the router
 from routers.router import router as router_user
-from routers.transacciones import router as router_transaction
+# from routers.transacciones import router as router_transaction
 
 #Driver error global
 from middleware.error import driver,validation_exceptions_handler
@@ -23,7 +23,7 @@ app.add_exception_handler(RequestValidationError, validation_exceptions_handler)
 
 # include all the routers
 app.include_router(router_user)
-app.include_router(router_transaction)
+# app.include_router(router_transaction)
 
 
 # The port for def

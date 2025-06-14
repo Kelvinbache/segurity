@@ -7,7 +7,7 @@ router = APIRouter()
 
 # routers of transactions 
 
-router.post("/transaction")(methodPostTransaction)
+# router.post("/transaction")(methodPostTransaction)
 
 
 

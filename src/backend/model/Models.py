@@ -1,6 +1,8 @@
 from pydantic import BaseModel
 from datetime import datetime
-# from fastapi.responses import JSONResponse
+
+# The model person 
+
 
 
 # modification of model
@@ -23,15 +25,19 @@ class Device(BaseModel):
     model:str 
     id_user:int
 
-
 # Create a model Token
 class Token(BaseModel):
-    token:str
+    session_token:str
+    token_type:str
 
+# Structure of token 
 class Payload(BaseModel):
     sub:int 
     userName:str
+    exp:datetime | None
         
+
+
 
 # Pasos de hoy:
 # 1) validar el saldo para hacer la transferencia
