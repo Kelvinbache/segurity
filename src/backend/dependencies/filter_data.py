@@ -2,9 +2,8 @@ from config.mySql import db
 
 cursors = db.cursor() 
   
-
 def validateUser(user:str):
-       
+       # intenta pasar todo por el mismo controlador     
        sql = ("select id, nombre, password from usuario") # select and have condition
          
         # Driver error  
