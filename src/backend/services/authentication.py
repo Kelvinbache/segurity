@@ -1,5 +1,8 @@
 # libre
-from authlib.jose import jwt
+
+from authlib.jose import (jwt, JoseError)
+
+from authlib.jose.errors import (InvalidClaimError)
 
 from fastapi import (Cookie, HTTPException, Depends)
 
@@ -15,41 +18,47 @@ key="The monkey flow"
 header= {'alg':'HS256'}     
 
 
-
-# from fastapi.security import OAuth2PasswordBearer 
-
-
-#Header 
-# Pass middleware ---> time is make fast ? 
-# Pass function for all methods http ---> time is make slow
-
-
 def authentication(user:dict): 
+    
 
     to_encode = user.copy()
 
     exp = datetime.now(timezone.utc) + timedelta(minutes=15)
+
     to_encode.update({"exp":exp})
     
-    # password   
-    token = jwt.encode(header, to_encode, key) #converted into a token
-    Token(session_token=token, token_type="bearer")   
+    try:  
+     
+        jwt_claims = jwt.encode(header, to_encode, key)
+        
+        Token(session_token=jwt_claims, token_type="bearer")        
 
-    return  token
+        return jwt_claims 
+     
+
+    except JoseError as error_token:
+
+           raise HTTPException(status_code=401, detail=f"Token invalid{error_token}")
+          
 
 
 
 def verificationToken(session_token:Annotated[str | None, Cookie()]= None): 
-    s= key.encode('utf-8')
-
+     
+    s=key.encode('utf-8')
+ 
     if session_token is None: 
          raise HTTPException(status_code=404, detail="cookie not found")
     
     try: 
-         claim = jwt.decode(session_token, s) #!----> Here this error 
+         claim = jwt.decode(session_token, s) #!----> the header of token not matches
          return True  
-    except:
-         raise HTTPException(status_code=401, detail="Token invalid")
+
+    except InvalidClaimError as invalid:
+         raise HTTPException(status_code=401, detail=f"the token {invalid}")
+    
+    except JoseError as error_token:
+         raise HTTPException(status_code=401, detail=f"{error_token}")
 
 # List for complete
 # --------------------------------------------------------------------------------------------
@@ -61,6 +70,7 @@ def verificationToken(session_token:Annotated[str | None, Cookie()]= None):
 # 6) new model of tokens
 # 7) create the .env for send keys_secret
 # 8) get model session token
+# 9) Driver error token
 # ---------------------------------------------------------------------------------------------
 
 
