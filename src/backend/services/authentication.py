@@ -12,14 +12,16 @@ from datetime import (datetime,timezone,timedelta)
 
 from model.Models import Token
 
+from config.config import config_data
 
-key="The monkey flow"
+
+
+key=config_data["TOKEN"]
 
 header= {'alg':'HS256'}     
 
 
 def authentication(user:dict): 
-    
 
     to_encode = user.copy()
 
