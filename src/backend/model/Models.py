@@ -25,11 +25,6 @@ class Device(BaseModel):
     model:str 
     id_user:int
 
-# Create a model Token
-class Token(BaseModel):
-    session_token:str
-    token_type:str
-
 # Structure of token 
 class Payload(BaseModel):
     sub:int 

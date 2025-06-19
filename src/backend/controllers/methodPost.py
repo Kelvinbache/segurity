@@ -1,5 +1,5 @@
 # Model
-from model.Models import (User,Transaction,Token)
+from model.Models import (User,Transaction)
 
 # Redirection
 from fastapi.responses import RedirectResponse , JSONResponse 

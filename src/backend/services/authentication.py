@@ -1,5 +1,3 @@
-# libre
-
 from authlib.jose import (jwt, JoseError)
 
 from authlib.jose.errors import (InvalidClaimError)
@@ -10,10 +8,7 @@ from typing import Annotated
 
 from datetime import (datetime,timezone,timedelta)
 
-from model.Models import Token
-
 from config.config import config_data
-
 
 
 key=config_data["TOKEN"]
@@ -33,46 +28,43 @@ def authentication(user:dict):
      
         jwt_claims = jwt.encode(header, to_encode, key)
         
-        Token(session_token=jwt_claims, token_type="bearer")        
+        jwt_dirty=str(jwt_claims) #?------> pass the token to str  
+        
+        jwt_clear= jwt_dirty[2:-1] #?-----> clear the token 
 
-        return jwt_claims 
-     
+        return jwt_clear #----> pass the token 
+              
 
     except JoseError as error_token:
 
            raise HTTPException(status_code=401, detail=f"Token invalid{error_token}")
           
 
-
-
-def verificationToken(session_token:Annotated[str | None, Cookie()]= None): 
-     
-    s=key.encode('utf-8')
- 
+def verificationToken(session_token:Annotated[str | None, Cookie()]= None):
+    
     if session_token is None: 
          raise HTTPException(status_code=404, detail="cookie not found")
-    
-    try: 
-         claim = jwt.decode(session_token, s) #!----> the header of token not matches
-         return True  
 
-    except InvalidClaimError as invalid:
-         raise HTTPException(status_code=401, detail=f"the token {invalid}")
+    if  isinstance(session_token, str):
+           
+            try: 
+                claim = jwt.decode(session_token, key) #!----> the header of token not matches
+                return True
+
+            except InvalidClaimError as invalid:
+                   raise HTTPException(status_code=401, detail=f"the token {invalid}")
     
-    except JoseError as error_token:
-         raise HTTPException(status_code=401, detail=f"{error_token}")
+            except JoseError as error_token:
+                   raise HTTPException(status_code=401, detail=f"{error_token}")
+     
 
 # List for complete
 # --------------------------------------------------------------------------------------------
-# 1) get the cookie, for give permissions to the user #!(import) (uses a model to pass and take the token, uses the same as user to receive the key) -----> How to make a valid token model?
-# 2) If we have an error with the token, handle it. #!(import)
 # 3) Ask the user to enter their password before making the transfer.
 # 4) Refresh the token every 10 minutes
 # 5) Delete cookies every 10 minutes
 # 6) new model of tokens
-# 7) create the .env for send keys_secret
 # 8) get model session token
-# 9) Driver error token
 # ---------------------------------------------------------------------------------------------
 
 
