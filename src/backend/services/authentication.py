@@ -1,6 +1,6 @@
 from authlib.jose import (jwt, JoseError)
 
-from authlib.jose.errors import (InvalidClaimError)
+from authlib.jose.errors import (InvalidClaimError, DecodeError, BadSignatureError, MissingClaimError, ExpiredTokenError)
 
 from fastapi import (Cookie, HTTPException, Depends)
 
@@ -23,6 +23,7 @@ def authentication(user:dict):
     exp = datetime.now(timezone.utc) + timedelta(minutes=15)
 
     to_encode.update({"exp":exp})
+
     
     try:  
      
@@ -30,14 +31,16 @@ def authentication(user:dict):
         
         jwt_dirty=str(jwt_claims) #?------> pass the token to str  
         
-        jwt_clear= jwt_dirty[2:-1] #?-----> clear the token 
+        jwt_clear= jwt_dirty[2:-1] #?-----> clear the token // pass to config clear token 
 
         return jwt_clear #----> pass the token 
-              
-
+          
+    except DecodeError:
+           raise HTTPException(status_code=400, detail=f"Invalid authentication token format, problem:")
+    
+    
     except JoseError as error_token:
-
-           raise HTTPException(status_code=401, detail=f"Token invalid{error_token}")
+           raise HTTPException(status_code=400, detail=f"{error_token}")
           
 
 def verificationToken(session_token:Annotated[str | None, Cookie()]= None):
@@ -46,23 +49,32 @@ def verificationToken(session_token:Annotated[str | None, Cookie()]= None):
          raise HTTPException(status_code=404, detail="cookie not found")
 
     if  isinstance(session_token, str):
-           
+                   
             try: 
-                claim = jwt.decode(session_token, key) #!----> the header of token not matches
+                claim = jwt.decode(session_token, key)
                 return True
 
-            except InvalidClaimError as invalid:
-                   raise HTTPException(status_code=401, detail=f"the token {invalid}")
+            except BadSignatureError as signature:
+                   raise HTTPException(status_code=401, detail=f"invalid signature of token {signature}")
+
+            except (InvalidClaimError,MissingClaimError) as invalid:
+                   raise HTTPException(status_code=401, detail=f"the token is invalid {invalid}")
+            
+            except ExpiredTokenError as exp_token:
+                   raise HTTPException(status_code=403, detail=f"the token is expire {exp_token}")
     
             except JoseError as error_token:
                    raise HTTPException(status_code=401, detail=f"{error_token}")
-     
+            
 
-# List for complete
+# ! List for complete
+# ? 1) refers token
+# ? 2) model of tokens with their permits 
+
+# Ideas of complement
 # --------------------------------------------------------------------------------------------
 # 3) Ask the user to enter their password before making the transfer.
 # 4) Refresh the token every 10 minutes
-# 5) Delete cookies every 10 minutes
 # 6) new model of tokens
 # 8) get model session token
 # ---------------------------------------------------------------------------------------------
@@ -72,7 +84,7 @@ def verificationToken(session_token:Annotated[str | None, Cookie()]= None):
 
 # Investigar como se puede hacer para refrescar un token (en 10 minutos)
 
-#? implementar una comparacion entre token y clave de transferencia (password of inicio)
+#? implementar una comparacion entre token y clave(especial) de transferencia (password of inicio)
 
 #! Definir en los headers los permisos que tendra el usuario (Importante ver como podemos responder con uno, y pasarle una luego redirecionarlo a su perfil como tal)
 
