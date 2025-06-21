@@ -35,16 +35,19 @@ def methodPost(user:User):
        
          token = authentication({"id":result[0], "user":result[1]}) #!-----> pass as a dependency
   
-         responder =  RedirectResponse(url=f"/banco/saldo/{result[0]}", status_code=301) 
+         responder =  RedirectResponse(url=f"/v1/banco/saldo/{result[0]}", status_code=301) 
  
-         responder.set_cookie(key="session_token", value=token, httponly=True, expires=3600, samesite="lax", path=f"/banco/saldo/{result[0]}" )
+         responder.set_cookie(key="session_token", value=token.session_token, httponly=True, expires=3600, samesite="lax", path=f"/v1/banco/saldo/{result[0]}" )
 
          return responder 
 
 
 
 
-
+# validate the type of permit
+# You should see the contact list with the data (name, ID, phone number, bank)------> #? add db 
+# then make a function that simply passes the data and puts the id below without showing much information
+       
 # Transaction of money
 # def methodPostTransaction(transaction:Transaction):
       

@@ -19,15 +19,10 @@ def methodGet():
     cursors.execute("select * from usuario")
    
     mySql = cursors.fetchall()
-
    
     return {"user":mySql}
 
-# Filter to account
-# capture the token we are passing
-# validarlo sip es correcto
 
-                             #! Para recibir una cookie los parametros deben ser iguales a nombre de la cookie
 def methodGetId(item_id:int, verify_token:Annotated[str,Depends(verificationToken)]):    
    
     cursors.execute("select * from cuenta where id_cuenta = %s",(item_id,))

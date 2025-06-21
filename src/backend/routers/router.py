@@ -12,9 +12,8 @@ from controllers.methodDelete import methodDelete
 # Model 
 # from model.Models import (User)
 
-
 # Use multiple routers
-router = APIRouter()
+router = APIRouter( prefix="/v1", tags=["v1"],)
 
 # show balance
 router.get("/banco")(methodGet)

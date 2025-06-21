@@ -10,20 +10,21 @@ from datetime import (datetime,timezone,timedelta)
 
 from config.config import config_data
 
+from model.Models import (Payload,Token)
+
 
 key=config_data["TOKEN"]
 
 header= {'alg':'HS256'}     
 
 
-def authentication(user:dict): 
+def authentication(data:dict) -> Token: 
+    
+    to_encode=data.copy() 
 
-    to_encode = user.copy()
+    exp_token = datetime.now(timezone.utc) + timedelta(minutes=15)
 
-    exp = datetime.now(timezone.utc) + timedelta(minutes=15)
-
-    to_encode.update({"exp":exp})
-
+    to_encode.update({"exp":exp_token})
     
     try:  
      
@@ -33,7 +34,7 @@ def authentication(user:dict):
         
         jwt_clear= jwt_dirty[2:-1] #?-----> clear the token // pass to config clear token 
 
-        return jwt_clear #----> pass the token 
+        return Token(session_token=jwt_clear, type_token="access")
           
     except DecodeError:
            raise HTTPException(status_code=400, detail=f"Invalid authentication token format, problem:")
@@ -44,7 +45,9 @@ def authentication(user:dict):
           
 
 def verificationToken(session_token:Annotated[str | None, Cookie()]= None):
-    
+
+
+
     if session_token is None: 
          raise HTTPException(status_code=404, detail="cookie not found")
 
@@ -58,15 +61,43 @@ def verificationToken(session_token:Annotated[str | None, Cookie()]= None):
                    raise HTTPException(status_code=401, detail=f"invalid signature of token {signature}")
 
             except (InvalidClaimError,MissingClaimError) as invalid:
-                   raise HTTPException(status_code=401, detail=f"the token is invalid {invalid}")
+                   raise HTTPException(status_code=401, detail=f"the token is invalid {invalid}") #--------> send it to another route
             
             except ExpiredTokenError as exp_token:
+                   Refresh_token(session_token)
                    raise HTTPException(status_code=403, detail=f"the token is expire {exp_token}")
     
             except JoseError as error_token:
                    raise HTTPException(status_code=401, detail=f"{error_token}")
-            
 
+
+# ----> pass the model of token
+# the dato
+# the time of use 
+# type of token that use the client 
+
+def Refresh_token(token:str) -> Token:
+
+       time_current = int(datetime.now(timezone.utc).timestamp())
+      
+       try: 
+
+          payload= jwt.decode(token,key)
+          
+          if  time_current > payload.get("exp"):
+              
+              exp_token = datetime.now(timezone.utc) + timedelta(minutes=8)
+              
+              to_encode = Payload(sub=payload.get("id"),userName=payload.get("user"), exp=exp_token)
+              
+              fresh_token = jwt.decode(headers,to_encode,key)
+              
+              return Token(session_token=fresh_token, type_token="refresh")
+
+       except JoseError as error_token:
+              raise HTTPException(status_code=400, detail=f"{error_token}")
+                    
+        
 # ! List for complete
 # ? 1) refers token
 # ? 2) model of tokens with their permits 
@@ -82,8 +113,6 @@ def verificationToken(session_token:Annotated[str | None, Cookie()]= None):
 
 # Manejar los errores al momento de comparar los tokens o cuando no estamos recibiendo nada 
 
-# Investigar como se puede hacer para refrescar un token (en 10 minutos)
-
 #? implementar una comparacion entre token y clave(especial) de transferencia (password of inicio)
 
 #! Definir en los headers los permisos que tendra el usuario (Importante ver como podemos responder con uno, y pasarle una luego redirecionarlo a su perfil como tal)
@@ -94,4 +123,3 @@ def verificationToken(session_token:Annotated[str | None, Cookie()]= None):
 
 # Agregar dependencias a las rutas para manejar los datos que van llegando
 
-# Configurar un poquito la base de datos y los modelos, para colocarle los tokens

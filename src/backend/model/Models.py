@@ -25,12 +25,15 @@ class Device(BaseModel):
     model:str 
     id_user:int
 
-# Structure of token 
+# Structure of token and fresh token 
 class Payload(BaseModel):
     sub:int 
     userName:str
     exp:datetime | None
-        
+
+class Token(BaseModel):
+    session_token:str
+    type_token:str        
 
 
 
