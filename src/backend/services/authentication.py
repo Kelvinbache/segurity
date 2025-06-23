@@ -1,7 +1,5 @@
 from authlib.jose import (jwt, JoseError)
 
-from authlib.jose.errors import (InvalidClaimError, DecodeError, BadSignatureError, MissingClaimError, ExpiredTokenError)
-
 from fastapi import (Cookie, HTTPException, Depends)
 
 from typing import Annotated
@@ -12,6 +10,7 @@ from config.config import config_data
 
 from model.Models import (Payload,Token)
 
+from middleware.error import driver_error
 
 key=config_data["TOKEN"]
 
@@ -29,24 +28,12 @@ def authentication(data:dict) -> Token:
     try:  
      
         jwt_claims = jwt.encode(header, to_encode, key)
-        
-        jwt_dirty=str(jwt_claims) #?------> pass the token to str  
-        
-        jwt_clear= jwt_dirty[2:-1] #?-----> clear the token // pass to config clear token 
-
-        return Token(session_token=jwt_clear, type_token="access")
+        return Token(session_token=jwt_claims, type_token="access")
           
-    except DecodeError:
-           raise HTTPException(status_code=400, detail=f"Invalid authentication token format, problem:")
-    
-    
     except JoseError as error_token:
-           raise HTTPException(status_code=400, detail=f"{error_token}")
-          
+          driver_error(error_token)
 
 def verificationToken(session_token:Annotated[str | None, Cookie()]= None):
-
-
 
     if session_token is None: 
          raise HTTPException(status_code=404, detail="cookie not found")
@@ -57,19 +44,10 @@ def verificationToken(session_token:Annotated[str | None, Cookie()]= None):
                 claim = jwt.decode(session_token, key)
                 return True
 
-            except BadSignatureError as signature:
-                   raise HTTPException(status_code=401, detail=f"invalid signature of token {signature}")
-
-            except (InvalidClaimError,MissingClaimError) as invalid:
-                   raise HTTPException(status_code=401, detail=f"the token is invalid {invalid}") #--------> send it to another route
-            
-            except ExpiredTokenError as exp_token:
-                   Refresh_token(session_token)
-                   raise HTTPException(status_code=403, detail=f"the token is expire {exp_token}")
-    
-            except JoseError as error_token:
-                   raise HTTPException(status_code=401, detail=f"{error_token}")
-
+            except JoseError as errors:
+                   driver_error(errors)
+                 
+                   
 
 # ----> pass the model of token
 # the dato
@@ -95,8 +73,7 @@ def Refresh_token(token:str) -> Token:
               return Token(session_token=fresh_token, type_token="refresh")
 
        except JoseError as error_token:
-              raise HTTPException(status_code=400, detail=f"{error_token}")
-                    
+              driver_error(error_token)      
         
 # ! List for complete
 # ? 1) refers token

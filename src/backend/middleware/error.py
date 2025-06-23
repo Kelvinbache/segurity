@@ -10,6 +10,8 @@ from fastapi.responses import JSONResponse
 # 
 from fastapi.encoders import jsonable_encoder
 
+from authlib.jose.errors import (InvalidClaimError, DecodeError, BadSignatureError, MissingClaimError, ExpiredTokenError)
+
 
 async def driver(request:Request, call_next):
        
@@ -27,6 +29,30 @@ async def driver(request:Request, call_next):
 # Validate the data  
 async def validation_exceptions_handler(request, ext):
        return JSONResponse (status_code=400, content= jsonable_encoder({"error":"invalid data", "detail":ext.errors() } ) )                 
+
+# encapsulates all the error in tokens
+def driver_error(problem:Exception):
+  
+        if isinstance(problem,BadSignatureError):
+            raise HTTPException(status_code=401, detail=f"invalid signature of token {BadSignatureError}")
+
+        if isinstance(problem,InvalidClaimError):
+            raise HTTPException(status_code=401, detail=f"the token is invalid {InvalidClaimError}") #--------> send it to another route
+        
+        if isinstance(problem,MissingClaimError):
+            raise HsTTPException(status_code=401, detail=f"the token is invalid {MissingClaimError}") #--------> send it to another route
+
+        if isinstance(problem,ExpiredTokenError):
+            raise HTTPException(status_code=403, detail=f"the token is expire {ExpiredTokenError}")
+    
+        if isinstance(problem,DecodeError):
+           raise HTTPException(status_code=400, detail=f"Invalid authentication token format, problem:")
+
+        if isinstance(problem,JoseError):
+            raise HTTPException(status_code=401, detail=f"{JoseError}") 
+         
+
+
 
 # Password invalid 
 # async def invalid_credentials(request, call_next):
