@@ -9,15 +9,11 @@ from services.authentication import authentication
 
 from typing import Annotated
 
-
 from fastapi import Depends
 
 #validate user
-from dependencies.filter_data import validateUser
+from dependencies.filter_data import (validateUser, validate_transaction)
 
-
-
-# Poner los manejadore de error como una depends
 
 # validate if the user exists
 def methodPost(user:User):  
@@ -47,38 +43,18 @@ def methodPost(user:User):
 # validate the type of permit
 # You should see the contact list with the data (name, ID, phone number, bank)------> #? add db 
 # then make a function that simply passes the data and puts the id below without showing much information
+# subtract from the account and update account of client  
        
 # Transaction of money
-# def methodPostTransaction(transaction:Transaction):
+def methodPostTransaction(transaction:Transaction):
       
-#       #Comparison between password and token 
+      result = validate_transaction(transaction)
+
+      # verify sip the account has enough money
+      # update the status of the two account  
+    
+      # selecting the account we are going to transfer
      
-#      sql = ("insert into transaccion" "(tipo_transaccion, fecha_hora , monto , cuenta_id, dispositivo_id)" "values(%s,%s,%s,%s,%s)")
-     
-#      insert = (transaction.typeTransaction, transaction.date_hour, transaction.moto, transaction.id_account,transaction.id_device ) 
-     
-#      try:
-       
-#         cursors.execute(sql,insert)
-#         db.commit()     # error here
-
-#      except db.Error as e:
-          
-#           db.rollback()
-         
-#          #! This can be handled with a dependency
-#          # 401 not authentificaion 
-#          # 403 not have permiso
-#          # 422 datos de la tranferencia son invalidos 
-
-#          #  add status code 401, 403, 422 
-#           responder = JSONResponse(status_code=401, content="invalid user or invalid key", headers={"WWW-Authenticate":"Bearer error=invalid_credentials"})
-
-#           responder.set_cookie(key="login_error", value="data invalid", httponly=True, expires=3600, samesite="lax")
-
-#      return {"message":"transaction completed successfully"} 
+      return {"message":result} #?------> What is your type of response?
 
 
-# Lista por hacer en estos prosimos 40 minutos o mas tiempo
-
-# Capturar el token por method get, y validarlo 

@@ -8,6 +8,15 @@ Content-Type: application/json
 }
 
 ###
-GET http://127.0.0.1:8000/v1/banco/saldo/1 HTTP/1.1
+POST  http://127.0.0.1:8000/v1/transaction HTTP/1.1
+Content-Type: application/json
+
+{
+    "typeTransaction":"person",
+    "date_hour":"2025-06-25 12:55:00",
+    "moto":100.4,
+    "id_account":1,
+    "id_device":1
+}
 
   
