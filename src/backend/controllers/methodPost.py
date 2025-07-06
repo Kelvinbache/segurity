@@ -9,10 +9,13 @@ from services.authentication import authentication
 
 from typing import Annotated
 
-from fastapi import Depends
+from fastapi import (Depends,Request)
 
 #validate user
-from dependencies.filter_data import (validateUser, validate_transaction)
+from dependencies.filter_data import (validateUser, validate_transaction, sql_get_amount_currents)
+
+#import 
+
 
 
 # validate if the user exists
@@ -46,15 +49,22 @@ def methodPost(user:User):
 # subtract from the account and update account of client  
        
 # Transaction of money
-def methodPostTransaction(transaction:Transaction):
-      
+def methodPostTransaction(transaction:Transaction, request:Request):
+     
       result = validate_transaction(transaction)
+     
+      new_online = request.url_for("login") #------> Ahora debemos cambiar algunas cosas sobre como estamos enviando las url y recibiendo sus valores
+      # new_online_two = request.url_for("home", item_id=1) #---> El problema debe pasar por el proceso de verificacion antes de pasar por aqui
+
+      # id_user = sql_get_amount_currents(new_online)
 
       # verify sip the account has enough money
       # update the status of the two account  
     
       # selecting the account we are going to transfer
      
-      return {"message":result} #?------> What is your type of response?
+      return {"message":new_online} #?------> What is your type of response?
 
+
+#? Como puedo solucionar el problema de las dependencias ? ----> El problema esta como podemos enviar la ruta
 

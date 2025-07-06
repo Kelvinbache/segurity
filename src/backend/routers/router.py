@@ -19,10 +19,10 @@ router = APIRouter( prefix="/v1", tags=["v1"],)
 router.get("/banco")(methodGet)
 
 # show the details
-router.get("/banco/saldo/{item_id}")(methodGetId)
+router.get("/banco/saldo/{item_id}", name="home")(methodGetId)
 
 # check if the client exists
-router.post("/banco")(methodPost)
+router.post("/banco", name="login")(methodPost)
 
 # Update the list of contact
 router.put("/banco/client/{item_id}")(methodPatch)

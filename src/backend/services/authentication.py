@@ -1,6 +1,6 @@
 from authlib.jose import (jwt, JoseError)
 
-from fastapi import (Cookie, HTTPException, Depends)
+from fastapi import (Cookie, HTTPException)
 
 from typing import Annotated
 
