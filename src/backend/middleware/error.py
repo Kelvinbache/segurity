@@ -22,8 +22,8 @@ async def driver(request:Request, call_next):
         except HTTPException as e:
               return JSONResponse(status_code= e.status_code, content= {"error":e.detail})
               
-      #   except Exception as exception:
-      #         return JSONResponse(status_code= 500, content=jsonable_encoder({"error":"error in server", "detail":exception}) )
+        except Exception as exception:
+              return JSONResponse(status_code= 500, content=jsonable_encoder({"error":"error in server", "detail":exception}) )
 
 
 # Validate the data  

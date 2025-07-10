@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import datetime,date
 
 # The model person 
 
@@ -13,9 +13,9 @@ class User(BaseModel):
 # Transaction
 class Transaction(BaseModel):
     typeTransaction:str
-    date_hour:datetime | None
     moto:float
-    id_account:int
+    dni:str
+    phone:str
     id_device:int  
 
 # Device
@@ -35,8 +35,12 @@ class Token(BaseModel):
     session_token:str
     type_token:str        
 
+#Structure account
 
-
-# Pasos de hoy:
-# 1) validar el saldo para hacer la transferencia
-# 2) Validar los datos de entrada
+class Account(BaseModel):
+    id_cuenta:int
+    tipo_cuenta:str
+    numero_cuenta:str 
+    saldo:float
+    fecha_apertura:date
+    usuario_id:int

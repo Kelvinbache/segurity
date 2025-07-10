@@ -1,14 +1,15 @@
 from config.mySql import db
 
-from fastapi import Depends
+from fastapi import Depends,Request
 
 from fastapi.responses import JSONResponse
 
 from typing import Annotated
 
-# from model.Models import Token, User
-
 from services.authentication import verificationToken
+
+from model.Models import Account
+
 
 cursors = db.cursor(dictionary=True)
 
@@ -23,10 +24,18 @@ def methodGet():
     return {"user":mySql}
 
 
-def methodGetId(item_id:int, verify_token:Annotated[str,Depends(verificationToken)]):    
+def methodGetId(item_id:int,request:Request,verify_token:Annotated[str,Depends(verificationToken)]):    
    
     cursors.execute("select * from cuenta where id_cuenta = %s",(item_id,))
     mys = cursors.fetchone()
+
+    response=Account(**mys) #------> Ahi que ordenar la forma que se esta enviando el dato
+        
+    generate_url = request.url_for("pay")
+         
+    part_segment=str(generate_url).split("/")
+                  
+    new_url= "/" + part_segment[3] + "/" + part_segment[4]
     
     if not mys:
           responder = JSONResponse(status_code=404,content="account not found") 
@@ -34,8 +43,17 @@ def methodGetId(item_id:int, verify_token:Annotated[str,Depends(verificationToke
           return responder
     
     if verify_token: 
-          responder = JSONResponse(content={"item_id":item_id,"user":mys})      
+          responder = JSONResponse(content={"item_id":item_id,"user":str(response)})
+          responder.set_cookie(key="user", value=item_id, httponly=True, expires=3600, samesite="lax", path=new_url)       
           return responder
+
+
+
+#! Objectivos para el dia siguiente:
+# Ajustar la forma que se estan enviando los datos 
+
+
+
 
 # lista de cosas que tengo que hacer aqui: 
 #  Crear el method get para ver a las personas que tengo agregadas (not is import)

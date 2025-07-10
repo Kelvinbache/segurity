@@ -12,14 +12,12 @@ from typing import Annotated
 from fastapi import (Depends,Request)
 
 #validate user
-from dependencies.filter_data import (validateUser, validate_transaction, sql_get_amount_currents)
-
-#import 
-
+from dependencies.filter_data import (validateUser, method_transaction, sql_get_amount_currents)
 
 
 # validate if the user exists
-def methodPost(user:User):  
+def methodPost(user:User, request:Request):  
+
 
      result = validateUser(user)
     
@@ -32,11 +30,17 @@ def methodPost(user:User):
             return responder      
      else:
        
-         token = authentication({"id":result[0], "user":result[1]}) #!-----> pass as a dependency
-  
-         responder =  RedirectResponse(url=f"/v1/banco/saldo/{result[0]}", status_code=301) 
+         token = authentication({"id":result[3], "user":result[1]})
+         
+         generate_url = request.url_for("home",item_id=result[3]) #---> el posible problema esta en que estoy pasando toda ruta
+         
+         part_segment=str(generate_url).split("/")
+                  
+         new_url= "/" + part_segment[3] + "/" + part_segment[4] + "/" + part_segment[5] + "/" + part_segment[6]
+
+         responder =  RedirectResponse(url=new_url, status_code=301) 
  
-         responder.set_cookie(key="session_token", value=token.session_token, httponly=True, expires=3600, samesite="lax", path=f"/v1/banco/saldo/{result[0]}" )
+         responder.set_cookie(key="session_token", value=token.session_token, httponly=True, expires=3600, samesite="lax", path=new_url)
 
          return responder 
 
@@ -47,24 +51,15 @@ def methodPost(user:User):
 # You should see the contact list with the data (name, ID, phone number, bank)------> #? add db 
 # then make a function that simply passes the data and puts the id below without showing much information
 # subtract from the account and update account of client  
-       
+
+#ahora aqui vamos a cambiar un quito la forma de entrada, como agregando que la fecha se ponga sola 
+
 # Transaction of money
-def methodPostTransaction(transaction:Transaction, request:Request):
+def methodPostTransaction(transaction:Transaction, check_balance:Annotated[str, Depends(sql_get_amount_currents)]):
+      
+      result = method_transaction(transaction, check_balance)
      
-      result = validate_transaction(transaction)
-     
-      new_online = request.url_for("login") #------> Ahora debemos cambiar algunas cosas sobre como estamos enviando las url y recibiendo sus valores
-      # new_online_two = request.url_for("home", item_id=1) #---> El problema debe pasar por el proceso de verificacion antes de pasar por aqui
-
-      # id_user = sql_get_amount_currents(new_online)
-
-      # verify sip the account has enough money
-      # update the status of the two account  
-    
-      # selecting the account we are going to transfer
-     
-      return {"message":new_online} #?------> What is your type of response?
+      return {"message":result} 
 
 
-#? Como puedo solucionar el problema de las dependencias ? ----> El problema esta como podemos enviar la ruta
 
