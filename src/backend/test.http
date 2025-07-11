@@ -16,8 +16,8 @@ Content-Type: application/json
 
 {
     "typeTransaction":"person",
-    "moto":30.45,
-    "dni":" 0412-45434534",
+    "moto":10.3,
+    "dni":"0412-45434534",
     "phone":"30765816",
     "id_device":1
 }

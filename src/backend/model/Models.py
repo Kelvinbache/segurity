@@ -42,5 +42,6 @@ class Account(BaseModel):
     tipo_cuenta:str
     numero_cuenta:str 
     saldo:float
-    fecha_apertura:date
+    fecha_apertura:datetime | None
     usuario_id:int
+

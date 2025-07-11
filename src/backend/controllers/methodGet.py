@@ -11,6 +11,7 @@ from services.authentication import verificationToken
 from model.Models import Account
 
 
+
 cursors = db.cursor(dictionary=True)
 
 
@@ -28,15 +29,16 @@ def methodGetId(item_id:int,request:Request,verify_token:Annotated[str,Depends(v
    
     cursors.execute("select * from cuenta where id_cuenta = %s",(item_id,))
     mys = cursors.fetchone()
+    
+    response=Account(**mys).model_dump()
 
-    response=Account(**mys) #------> Ahi que ordenar la forma que se esta enviando el dato
-        
     generate_url = request.url_for("pay")
          
     part_segment=str(generate_url).split("/")
                   
     new_url= "/" + part_segment[3] + "/" + part_segment[4]
     
+
     if not mys:
           responder = JSONResponse(status_code=404,content="account not found") 
           responder.set_cookie(key="login_error", value="data invalid", httponly=True, expires=3600, samesite="lax")
@@ -50,9 +52,9 @@ def methodGetId(item_id:int,request:Request,verify_token:Annotated[str,Depends(v
 
 
 #! Objectivos para el dia siguiente:
-# Ajustar la forma que se estan enviando los datos 
-
-
+# Ver la forma de ajustar el problema del time
+# Ver que detalles se pueden mejorar y quitar 
+# Ahora debemos decodificacion al momento de incresar datos del cliente
 
 
 # lista de cosas que tengo que hacer aqui: 

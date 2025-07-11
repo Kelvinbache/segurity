@@ -13,14 +13,12 @@ cursors = db.cursor()
 
 def validateUser(user:str):
 
-    #    sql = ("select id, nombre, password from usuario")
        sql_two = ("select * from usuario a inner join cuenta b on a.id = b.usuario_id")
          
-    #    cursors.execute(sql)
        cursors.execute(sql_two)
 
        mys = cursors.fetchall()
-       result = list(filter(lambda data_base: data_base[1] == user.name and data_base[2] == user.password, mys)) #A partir de aqui debemos hacer una condicion que nos valide el usuario
+       result = list(filter(lambda data_base: data_base[1] == user.name and data_base[2] == user.password, mys))
                       
        if result:
              for data in result: 
@@ -29,7 +27,6 @@ def validateUser(user:str):
           return None
 
 
-#Buscar la buenta del cliente
 def sql_get_amount_currents(user:Annotated[str | None, Cookie()] = None):
 
       if user is None:
@@ -37,7 +34,7 @@ def sql_get_amount_currents(user:Annotated[str | None, Cookie()] = None):
          
       else:
          
-          sql_get_amount_current=("select saldo from cuenta where id_cuenta = %s ") # deberiamos hacer una sola consuta  
+          sql_get_amount_current=("select saldo from cuenta where id_cuenta = %s ") 
           cursors.execute(sql_get_amount_current, (user,))
           mys=cursors.fetchone()
          
@@ -48,7 +45,6 @@ def sql_get_amount_currents(user:Annotated[str | None, Cookie()] = None):
 # !Ajustar que la cookies se envien por todo el programa, para evitar que solo se usen en una ruta
 # El dispositovo esta de mas, porque eso debemos hacerlo aparte solo centrate en la parte de vericar los datos
 
-#Funcion donde podamos pasar los datos de donde vamos a enviar el dinero, y vericar si existe 
 def verify_the_customer(data_customer:str):
 
     id_user=0
@@ -62,7 +58,7 @@ def verify_the_customer(data_customer:str):
     result = list(filter(lambda data_base: data_base[3] == data_customer.dni or data_base[4] == data_customer.phone, mys))
      
     for data in result:
-        id_user = data[7]
+        id_user = {"customer":data[7], "amount":data[10]}
     
     return id_user
 
@@ -80,9 +76,11 @@ def method_transaction(data_transaction:dict, customer:dict):
 
           sql_update_account=("update cuenta set saldo = %s where id_cuenta = %s")
          
-          insert = (data_transaction.typeTransaction, date_time_of_day, data_transaction.moto, id_account, data_transaction.id_device) 
-
-          insert_update = (data_transaction.moto, id_account)
+          insert = (data_transaction.typeTransaction, date_time_of_day, data_transaction.moto, id_account["customer"], data_transaction.id_device) 
+           
+          money_winner = id_account["amount"] + data_transaction.moto 
+        
+          insert_update = (money_winner, id_account["customer"])
           
           money= customer["amount"] - data_transaction.moto
           
@@ -103,5 +101,3 @@ def method_transaction(data_transaction:dict, customer:dict):
       
 
 
-# Objentivos para hoy:
-# Agregar el metodo de pago movil, (Dni, telefono, banco, monto) #!----> Importante aclarar que debemos cabiar la base de datos para hacer todo
