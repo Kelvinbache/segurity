@@ -51,14 +51,11 @@ def methodGetId(item_id:int,request:Request,verify_token:Annotated[str,Depends(v
 
 
 
-#! Objectivos para el dia siguiente:
+#! Lo que esta falatando por hacer en la primera fase:
 # Ver la forma de ajustar el problema del time
-# Ver que detalles se pueden mejorar y quitar 
 # Ahora debemos decodificacion al momento de incresar datos del cliente
-
-
-# lista de cosas que tengo que hacer aqui: 
-#  Crear el method get para ver a las personas que tengo agregadas (not is import)
-#  Crear el method post para agregar alguien y enviar el dinero (import)
-#  Crear el method delete para eliminar una persona que no me agrada (not is import)
-#  verificar si en verdad existe esa persona (import) 
+# Cambiar la base de datos por la otra 
+# Agregar el protocolo de los roles y permisos al cliente
+# Agregar la pestana para ver la lita de pagos que se han hecho durante los dias,semanas y meses del ano 
+# Ajustar el protocolo de las cookiens para que viajen ya cuando estamos ingresando a la cuenta, y se ejecuten los demas protocolos de seguridad
+# Hacer un test donde recise lo bugs que esta teniendo la aplicacion (uno de los problema esta cuando estamos enviando la cookien)
