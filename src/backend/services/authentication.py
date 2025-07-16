@@ -42,7 +42,7 @@ def verificationToken(session_token:Annotated[str | None, Cookie()]= None):
                    
             try: 
                 claim = jwt.decode(session_token, key)
-                return True
+                return claim
 
             except JoseError as errors:
                    driver_error(errors)
@@ -75,9 +75,7 @@ def Refresh_token(token:str) -> Token:
        except JoseError as error_token:
               driver_error(error_token)      
         
-# ! List for complete
-# ? 1) refers token
-# ? 2) model of tokens with their permits 
+
 
 # Ideas of complement
 # --------------------------------------------------------------------------------------------
@@ -90,11 +88,7 @@ def Refresh_token(token:str) -> Token:
 
 # Manejar los errores al momento de comparar los tokens o cuando no estamos recibiendo nada 
 
-#? implementar una comparacion entre token y clave(especial) de transferencia (password of inicio)
-
 #! Definir en los headers los permisos que tendra el usuario (Importante ver como podemos responder con uno, y pasarle una luego redirecionarlo a su perfil como tal)
-
-# Ver como puedo almacenar un token, y luego compararlo (en 10 minutos)(Caso en la session globlales)
 
 # Enviar la respuesta como un header, y capturarla 
 

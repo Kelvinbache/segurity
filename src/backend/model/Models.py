@@ -1,9 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime,date
 
-# The model person 
-
-
 
 # modification of model
 class User(BaseModel):
@@ -44,4 +41,3 @@ class Account(BaseModel):
     saldo:float
     fecha_apertura:datetime | None
     usuario_id:int
-

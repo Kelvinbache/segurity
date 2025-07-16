@@ -1,6 +1,6 @@
 from config.mySql import db
 
-from fastapi import Cookie, HTTPException
+from fastapi import HTTPException
 
 from typing import Annotated
 
@@ -27,9 +27,10 @@ def validateUser(user:str):
           return None
 
 
-def sql_get_amount_currents(user:Annotated[str | None, Cookie()] = None):
+def sql_get_amount_currents(user:int):
 
       if user is None:
+         
          raise HTTPException(status_code=404, detail="cookie not found")
          
       else:
