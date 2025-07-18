@@ -19,7 +19,7 @@ router = APIRouter( prefix="/v1", tags=["v1"],)
 router.get("/banco")(methodGet)
 
 # show the details
-router.get("/banco/saldo/{item_id}", name="home")(methodGetId)
+router.get("/banco/saldo/{rol_user}/{item_id}", name="home")(methodGetId)
 
 # check if the client exists
 router.post("/banco")(methodPost)

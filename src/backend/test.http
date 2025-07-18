@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "name": "jainery",
-  "password": "5644546"
+  "password": "1234"
 }
 
 ###
@@ -19,10 +19,11 @@ Content-Type: application/json
     "moto":10.3,
     "dni":"0412-45434534",
     "phone":"30765816",
-    "id_device":1
+    "id_device":1,
+    "back":"banco de venezuela"
 }
 
 ###
-GET http://127.0.0.1:8000/v1/banco/saldo/1 HTTP/1.1  
+GET http://127.0.0.1:8000/v1/banco/saldo/cliente/2 HTTP/1.1  
 
 

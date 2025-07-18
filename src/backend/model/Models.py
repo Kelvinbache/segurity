@@ -13,7 +13,8 @@ class Transaction(BaseModel):
     moto:float
     dni:str
     phone:str
-    id_device:int  
+    id_device:int
+    back:str  
 
 # Device
 class Device(BaseModel):
@@ -41,3 +42,4 @@ class Account(BaseModel):
     saldo:float
     fecha_apertura:datetime | None
     usuario_id:int
+    banco_id:int

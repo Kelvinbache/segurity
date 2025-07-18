@@ -6,6 +6,6 @@ db = myBase.connect(
     host='localhost',
     user="root",
     password=config_data["DB"],
-    database="segurity"
+    database="security_2"
 )
 

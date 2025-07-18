@@ -43,19 +43,20 @@ def sql_get_amount_currents(user:int):
            
 # Algunas cosas que ahi que cambiar:
 # Ajustar la hora para nuestro pais
-# !Ajustar que la cookies se envien por todo el programa, para evitar que solo se usen en una ruta
 # El dispositovo esta de mas, porque eso debemos hacerlo aparte solo centrate en la parte de vericar los datos
 
 def verify_the_customer(data_customer:str):
 
     id_user=0
 
-    sql=("select * from data_user a inner join cuenta b on a.usuario_id = b.usuario_id")
+    sql=("select * from data_user a inner join cuenta b on a.usuario_id = b.usuario_id inner join banco c on b.banco_id = c.id_banco ")
     
     cursors.execute(sql)
     
     mys=cursors.fetchall()
     
+    print(mys)
+
     result = list(filter(lambda data_base: data_base[3] == data_customer.dni or data_base[4] == data_customer.phone, mys))
      
     for data in result:
@@ -102,3 +103,4 @@ def method_transaction(data_transaction:dict, customer:dict):
       
 
 
+#Aqui viene otro concepto y es poner el banco que pertenece la persona, debemos usar una tercera relacion 

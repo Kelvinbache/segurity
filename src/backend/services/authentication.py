@@ -49,11 +49,6 @@ def verificationToken(session_token:Annotated[str | None, Cookie()]= None):
                  
                    
 
-# ----> pass the model of token
-# the dato
-# the time of use 
-# type of token that use the client 
-
 def Refresh_token(token:str) -> Token:
 
        time_current = int(datetime.now(timezone.utc).timestamp())
@@ -76,21 +71,4 @@ def Refresh_token(token:str) -> Token:
               driver_error(error_token)      
         
 
-
-# Ideas of complement
-# --------------------------------------------------------------------------------------------
-# 3) Ask the user to enter their password before making the transfer.
-# 4) Refresh the token every 10 minutes
-# 6) new model of tokens
-# 8) get model session token
-# ---------------------------------------------------------------------------------------------
-
-
-# Manejar los errores al momento de comparar los tokens o cuando no estamos recibiendo nada 
-
-#! Definir en los headers los permisos que tendra el usuario (Importante ver como podemos responder con uno, y pasarle una luego redirecionarlo a su perfil como tal)
-
-# Enviar la respuesta como un header, y capturarla 
-
-# Agregar dependencias a las rutas para manejar los datos que van llegando
 

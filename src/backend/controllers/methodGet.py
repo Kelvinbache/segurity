@@ -23,24 +23,26 @@ def methodGet():
     return {"user":mySql}
 
 
-def methodGetId(item_id:int, verify_token:Annotated[str,Depends(verificationToken)]): 
+def methodGetId(rol_user:str, item_id:int, verify_token:Annotated[str,Depends(verificationToken)]): 
 
     if verify_token["id"] is not item_id:
           raise HTTPException(status_code=403, detail="account not found")
-
-    else:      
-          cursors.execute("select * from cuenta where id_cuenta = %s",(item_id,)) 
-
-          mys = cursors.fetchone()
+    else: 
+         
+        if rol_user == "cliente":   #-----> deberiamos poner funciones a parte para manejar un rol  
+            cursors.execute("select * from cuenta where id_cuenta = %s",(item_id,)) 
+            mys = cursors.fetchone()
     
-          if not mys:
-              raise HTTPException(status_code=401, detail="account not found")
-    
-          response = Account(**mys).model_dump()         
+            if not mys:
+                raise HTTPException(status_code=401, detail="account not found")
 
-          responder = JSONResponse(content={"item_id":item_id,"user":str(response)})
+            response = Account(**mys).model_dump()         
+            responder = JSONResponse(content={"item_id":item_id,"user":str(response)})
 
-          return responder
+            return responder
+         
+        raise HTTPException(status_code=400, detail="you have another role")
+
 
 
 

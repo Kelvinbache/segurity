@@ -24,13 +24,13 @@ def methodPost(user:User, request:Request):
               raise HTTPException(status_code=401, detail="account not found", headers={"WWW-Authenticate":"Bearer error=invalid_credentials"})           
      else:
        
-         token = authentication({"id":result[3], "user":result[1]})
+         token = authentication({"id":result[0], "user":result[1], "rol":result[3]})
          
-         generate_url = request.url_for("home",item_id=result[3])
+         generate_url = request.url_for("home",rol_user=result[3],item_id=result[0]) #----> puede ser vas reducido, pasando un directorio 
          
          part_segment=str(generate_url).split("/")
                   
-         new_url= "/" + part_segment[3] + "/" + part_segment[4] + "/" + part_segment[5] + "/" + part_segment[6]
+         new_url= "/" + part_segment[3] + "/" + part_segment[4] + "/" + part_segment[5] + "/" + part_segment[6] + "/" + part_segment[7]
 
          responder =  RedirectResponse(url=new_url, status_code=301) 
  
@@ -50,3 +50,4 @@ def methodPostTransaction(transaction:Transaction, verify_token:Annotated[str,De
       return {"message":result} 
 
 
+#Ahora vamos a agregar el sistema de roles
