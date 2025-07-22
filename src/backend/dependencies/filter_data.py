@@ -41,13 +41,12 @@ def sql_get_amount_currents(user:int):
          
           return {"amount":mys[0], "user":user}
            
-# Algunas cosas que ahi que cambiar:
-# Ajustar la hora para nuestro pais
-# El dispositovo esta de mas, porque eso debemos hacerlo aparte solo centrate en la parte de vericar los datos
+
 
 def verify_the_customer(data_customer:str):
-
+ 
     id_user=0
+    add_character = "V-" + data_customer.dni
 
     sql=("select * from data_user a inner join cuenta b on a.usuario_id = b.usuario_id inner join banco c on b.banco_id = c.id_banco ")
     
@@ -55,14 +54,17 @@ def verify_the_customer(data_customer:str):
     
     mys=cursors.fetchall()
     
-    print(mys)
-
-    result = list(filter(lambda data_base: data_base[3] == data_customer.dni or data_base[4] == data_customer.phone, mys))
-     
-    for data in result:
-        id_user = {"customer":data[7], "amount":data[10]}
+    result = list(filter(lambda data_base: data_base[3] == add_character or data_base[4] == data_customer.phone, mys))
     
-    return id_user
+    for data in result:
+        
+        if data_customer.back == data[-2]:  
+            id_user = {"customer":data[7], "amount":data[14]} 
+            return id_user
+
+        else:
+           raise HTTPException(status_code=403, detail="user does not belong to this account")
+
 
 def method_transaction(data_transaction:dict, customer:dict):
           
@@ -101,6 +103,3 @@ def method_transaction(data_transaction:dict, customer:dict):
           except mysql.connector.Error as error:        
                  return error
       
-
-
-#Aqui viene otro concepto y es poner el banco que pertenece la persona, debemos usar una tercera relacion 

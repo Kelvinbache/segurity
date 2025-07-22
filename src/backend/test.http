@@ -3,7 +3,7 @@ Content-Type: application/json
 
 
 {
-  "name": "jainery",
+  "name": "kelvin",
   "password": "1234"
 }
 
@@ -11,19 +11,17 @@ Content-Type: application/json
 POST  http://127.0.0.1:8000/v1/transaction HTTP/1.1
 Content-Type: application/json
 
-# Evitar en estos momento 
-# 1) Poner el id de cada cosa (Solo debemos poner los siguientes datos) #! (DNI, TELEFONO, BANCO, MONTO, CONCEPTO)
 
 {
     "typeTransaction":"person",
-    "moto":10.3,
-    "dni":"0412-45434534",
-    "phone":"30765816",
+    "moto":9.23,
+    "dni":"31254294",
+    "phone":"04129907714",
     "id_device":1,
     "back":"banco de venezuela"
 }
 
 ###
-GET http://127.0.0.1:8000/v1/banco/saldo/cliente/2 HTTP/1.1  
+GET http://127.0.0.1:8000/v1/banco/saldo/cliente/1 HTTP/1.1  
 
 
