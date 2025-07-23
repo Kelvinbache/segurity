@@ -102,4 +102,8 @@ def method_transaction(data_transaction:dict, customer:dict):
 
           except mysql.connector.Error as error:        
                  return error
-      
+
+# Tareas que vamos hacer hoy
+# 1) Crear modelos de respuesta, para los diferentes roles que tengamos presentes
+# 2) crear una funcion que haga el papel de poder filtrar los administradores y clientes #?(O mejor dicho poder responder con una respuesta espeficica)
+# 3) Tenemos que recuperar los roles que pertenesca ese cliente

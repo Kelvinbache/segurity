@@ -33,13 +33,4 @@ class Token(BaseModel):
     session_token:str
     type_token:str        
 
-#Structure account
 
-class Account(BaseModel):
-    id_cuenta:int
-    tipo_cuenta:str
-    numero_cuenta:str 
-    saldo:float
-    fecha_apertura:datetime | None
-    usuario_id:int
-    banco_id:int
