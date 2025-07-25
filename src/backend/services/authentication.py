@@ -8,7 +8,7 @@ from datetime import (datetime,timezone,timedelta)
 
 from config.config import config_data
 
-from model.Models import (Payload,Token)
+from model.Models import (Payload,Token, Payload_tow)
 
 from middleware.error import driver_error
 
@@ -19,15 +19,11 @@ header= {'alg':'HS256'}
 
 def authentication(data:dict) -> Token: 
     
-    to_encode=data.copy() 
+    exp_token = int((datetime.now(timezone.utc) + timedelta(minutes=15)).timestamp())
+    payload = Payload_tow(sub=data.get("id"), userName=data.get("user"), rol=data.get("rol"), exp=exp_token)
 
-    exp_token = datetime.now(timezone.utc) + timedelta(minutes=15)
-
-    to_encode.update({"exp":exp_token})
-    
     try:  
-     
-        jwt_claims = jwt.encode(header, to_encode, key)
+        jwt_claims = jwt.encode(header, payload.model_dump(), key)
         return Token(session_token=jwt_claims, type_token="access")
           
     except JoseError as error_token:
@@ -63,7 +59,7 @@ def Refresh_token(token:str) -> Token:
               
               to_encode = Payload(sub=payload.get("id"),userName=payload.get("user"), exp=exp_token)
               
-              fresh_token = jwt.decode(headers,to_encode,key)
+              fresh_token = jwt.decode(headers,to_encode.model_dump(),key)
               
               return Token(session_token=fresh_token, type_token="refresh")
 

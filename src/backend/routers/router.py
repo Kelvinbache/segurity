@@ -9,9 +9,6 @@ from controllers.methodPatch import methodPatch
 
 from controllers.methodDelete import methodDelete
 
-# Model 
-# from model.Models import (User)
-
 # Use multiple routers
 router = APIRouter( prefix="/v1", tags=["v1"],)
 
@@ -27,7 +24,6 @@ router.post("/banco")(methodPost)
 # Update the list of contact
 router.put("/banco/client/{item_id}")(methodPatch)
 
+# Delete the contact
 router.delete("/banco/client/{item_id}")(methodDelete)
 
-
-# Tenemos que actualizar la API a futuro

@@ -11,3 +11,8 @@ class Account(BaseAccount):
     tipo_cuenta:str
     usuario_id:int
     banco_id:int
+
+class Transaction(BaseModel):
+    monto: float
+    numero_cuenta: str
+    fecha_hora: datetime | None

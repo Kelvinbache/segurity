@@ -27,10 +27,14 @@ class Device(BaseModel):
 class Payload(BaseModel):
     sub:int 
     userName:str
-    exp:datetime | None
+    exp:int| None
 
 class Token(BaseModel):
     session_token:str
     type_token:str        
 
-
+class Payload_tow(BaseModel):
+    sub:int 
+    userName:str
+    rol:str
+    exp:int | None

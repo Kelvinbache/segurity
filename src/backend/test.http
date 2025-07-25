@@ -27,3 +27,12 @@ GET http://127.0.0.1:8000/v1/banco/saldo/administrador/1 HTTP/1.1
 ###
 GET http://127.0.0.1:8000/v1/banco/saldo/cliente/2 HTTP/1.1
 Content-Type: application/json
+
+
+###
+GET http://127.0.0.1:8000/v1/banco/saldo/cliente/2 HTTP/1.1
+Content-Type: application/json
+
+###
+GET http://127.0.0.1:8000/v1/transaction/list HTTP/1.1
+Content-Type: application/json

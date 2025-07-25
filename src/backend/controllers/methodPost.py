@@ -43,7 +43,7 @@ def methodPost(user:User, request:Request):
 # Transaction of money
 def methodPostTransaction(transaction:Transaction, verify_token:Annotated[str,Depends(verificationToken)]):
       
-      check_balance = sql_get_amount_currents(verify_token["id"])
+      check_balance = sql_get_amount_currents(verify_token["sub"])
       
       result = method_transaction(transaction, check_balance)
      

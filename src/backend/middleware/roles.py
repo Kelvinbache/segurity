@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 
 from fastapi import HTTPException
 
-from model.Response_models import Account, BaseAccount
+from model.Response_models import Account, BaseAccount, Transaction
 
 cursors = db.cursor(dictionary=True)
 
@@ -22,6 +22,7 @@ def roles(user_id: int, rol_user: str):
               raise HTTPException(status_code=400, detail="you have another role")
 
 
+#? Method to get client account details
 def get_client(user_id:int):
 
     cursors.execute("select * from cuenta where id_cuenta = %s",(user_id,)) 
@@ -36,7 +37,22 @@ def get_client(user_id:int):
     responder = JSONResponse(content={"item_id": user_id, "user": str(client_response)})
 
     return responder
-         
+
+#? Method to get transaction list for a client, debe ir en otro carpeta y archivo         
+def listTransactions(user_id:int):
+    cursors.execute(" select monto, fecha_hora, numero_cuenta from transaccion a inner join cuenta b on a.cuenta_id = b.id_cuenta where a.cuenta_id = %s",(user_id,))
+
+    mys = cursors.fetchone()
+    
+    if not mys:
+        raise HTTPException(status_code=404, detail="transactions not found")
+
+    transactions = Transaction(monto=mys["monto"], numero_cuenta=mys["numero_cuenta"], fecha_hora=mys["fecha_hora"]).model_dump()
+
+    return JSONResponse(content={"transactions": str(transactions)})
+
+
+#? Method to get admin account details
 def get_admin(user_id:int):
     cursors.execute("select * from cuenta where id_cuenta = %s",(user_id,)) 
     mys = cursors.fetchone()
